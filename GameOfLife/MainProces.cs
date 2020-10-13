@@ -21,12 +21,15 @@ namespace GameOfLife
 
             setup.frameSetup(inp);
             draw.drawCur(setup.cellBlock, inp);
+            int f = 0;
             while (true)
             {
+                f++;
+                Console.WriteLine("\n Iteration count "+ f);
+                //Console.WriteLine("\n Active count of live cells " + iter.liveCells);
                 iter.updater(setup.cellBlock, inp);
                 setup.cellBlock = iter.stepAray;
                 draw.drawCur(setup.cellBlock, inp);
-
                 Thread.Sleep(1000);
             }
             Console.WriteLine("beigasigues");

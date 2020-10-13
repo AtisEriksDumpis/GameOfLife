@@ -10,10 +10,12 @@ namespace GameOfLife
     {
         //public aray for compareson reasons
         public int[,] stepAray;
+        public int liveCells;
 
         public void updater(int[,] arr, int inp)
         {
             stepAray = new int[inp, inp];
+            //liveCells = 0;
             for (int i = 0; i < inp; i++)
             {
                 for (int j = 0; j < inp; j++)
@@ -39,12 +41,20 @@ namespace GameOfLife
                     }
                     if (arr[i, j] == 1)
                     {
-                        if (sum == 2 || sum == 3) stepAray[i, j] = 1;
+                        if (sum == 2 || sum == 3) 
+                        { 
+                            stepAray[i, j] = 1;
+                            //liveCells++;
+                        }
                         else stepAray[i, j] = 0;
                     }
                     else
                     {
-                        if (sum == 3) stepAray[i, j] = 1;
+                        if (sum == 3)
+                        {
+                            stepAray[i, j] = 1;
+                            //liveCells++;
+                        }
                         else stepAray[i, j] = 0;
                     }
 
