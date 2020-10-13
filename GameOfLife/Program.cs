@@ -8,6 +8,7 @@ namespace GameOfLife
         {
             MainProces main = new MainProces();
             main.procOrd();
+            //kas tad tas ja ne izmaina
         }
     }
 }
