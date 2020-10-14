@@ -7,6 +7,7 @@ namespace GameOfLife
     //Class that draws any iterration given two dimensinal aray and size of one axes
     class Drawer
     {
+        public int itercount;
         public void drawCur(int[,] cellBlock, int inp)
         {
             Console.SetCursorPosition(0, 1);
@@ -25,6 +26,7 @@ namespace GameOfLife
                 Console.WriteLine("| " + textline + " |");
             }
             Console.WriteLine("\n live cells " + sum1);
+            Console.WriteLine("\n Iterration counter: "+itercount);
         }
 
     }
