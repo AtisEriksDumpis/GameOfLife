@@ -1,25 +1,34 @@
-﻿using System;
+﻿using GameOfLife.Data;
+using GameOfLife.Services;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace GameOfLife
 {
     //Main task list for orderly exacution. One process to call all other classes 
     class MainProces
     {
-        //public int inp;
+        public bool threadstop = true;
         public void procOrd()
         {
-            Setup setup = new Setup();
-            Iteration iter = new Iteration();
-            Drawer draw = new Drawer();
+            SetupRandom setup = new SetupRandom();
+            Iteration iteration = new Iteration();
+            PrintToConsole draw = new PrintToConsole();
             PrintToFile prFile = new PrintToFile();
             SetupFromFile setFrom = new SetupFromFile();
+            PublicData publicData = new PublicData();
+            ParalelThreadProces paralelThrProc = new ParalelThreadProces();
 
-            Console.WriteLine("___GAME OF LIFE___");
-            Console.WriteLine("To contineu from last saved games instance pres f if not input size of matixes ege");
+            Console.WriteLine(publicData.headerText);
+            Console.WriteLine(publicData.matrixGeneratorOptions);
             string i = Console.ReadLine();
+
+            Thread[] paralelGames = new Thread[1];
+
+
             draw.itercount = 0;
             if (i == "f")
             {
@@ -30,39 +39,26 @@ namespace GameOfLife
                 setFrom.inp = Convert.ToInt32(i);
                 setup.frameSetup(setFrom.inp);
             }
-
-
+            for (int k = 0; k < paralelGames.Length; k++)
+            {
+                paralelGames[k] = new Thread(new ThreadStart(paralelThrProc.thredproceses));
+                paralelGames[k].Start();
+            }
             draw.drawCur(setup.cellBlock, setFrom.inp);
-            //int f = 0;
             do
             {
                 while (!Console.KeyAvailable)
                 {
-                    draw.itercount++;
-                    //Console.WriteLine("\n Active count of live cells " + iter.liveCells);
-                    iter.updater(setup.cellBlock, setFrom.inp);
-                    setup.cellBlock = iter.stepAray;
-                    draw.drawCur(setup.cellBlock, setFrom.inp);
-                    //var key = Console.ReadKey();
-                    //if (key.Key == ConsoleKey.Escape)
-                    //{
-                    //    Environment.Exit(0);
-                    //}
-                    Console.WriteLine("Press ESC to stop"+ setFrom.inp);
-                    //do
 
-                    Thread.Sleep(1000);
                 }
-
             } while (Console.ReadKey(true).Key != ConsoleKey.Escape);
-            Console.WriteLine("to save to file press s key");
+            threadstop = false;
+            Console.WriteLine(publicData.saveCurentstepText);
             string sinp = Console.ReadLine();
             if (sinp == "s")
             {
                 prFile.print(setup.cellBlock, setFrom.inp);
             }
-
-
         }
     }
 }

@@ -10,8 +10,8 @@ namespace GameOfLife
     class SetupFromFile
     {
         public int inp;
-        public int[,] fileCellBlock;
-        public int[,] prepFromFile()
+        public bool[,] fileCellBlock;
+        public bool[,] prepFromFile()
         {
             //Setup set = new Setup();
 
@@ -27,7 +27,7 @@ namespace GameOfLife
                     if (inp.Equals(0)) 
                     { 
                         inp = Convert.ToInt32(line);
-                        fileCellBlock = new int[inp, inp];
+                        fileCellBlock = new bool[inp, inp];
                     }
                     else
                     {
@@ -35,7 +35,7 @@ namespace GameOfLife
 
                         for (int j = 0; j < inp; j++)
                         {
-                            fileCellBlock[counter, j] = Convert.ToInt32(digets[j]);
+                            fileCellBlock[counter, j] = Convert.ToInt32(digets[j]).Equals(1);
                         }
                         counter++;
                     }

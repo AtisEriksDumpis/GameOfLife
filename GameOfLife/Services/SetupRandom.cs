@@ -5,19 +5,19 @@ using System.Text;
 namespace GameOfLife
 {
     //Class to set up the first game panel with random generation of cells
-    class Setup
+    class SetupRandom
     {
-        public int[,] cellBlock;
+        public bool[,] cellBlock;
 
         public void frameSetup(int inp)
         {
             Random ran = new Random();
-            cellBlock = new int[inp, inp];
+            cellBlock = new bool[inp, inp];
             for (int i = 0; i < inp; i++)
             {
                 for (int j = 0; j < inp; j++)
                 {
-                    cellBlock[i, j] = ran.Next(2);
+                    cellBlock[i, j] = (ran.Next(2)).Equals(1);
                 }
             }
         }

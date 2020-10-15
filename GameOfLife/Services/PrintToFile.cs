@@ -7,7 +7,7 @@ namespace GameOfLife
 {
     class PrintToFile
     {
-        public void print(int[,] cellBlock, int inp) {
+        public void print(bool[,] cellBlock, int inp) {
             string path = @"C:\Users\atis.dumpis\Documents\Temp\GameOfLife.txt";
             Console.SetCursorPosition(0, 1);
             Console.WriteLine("                                 ");
@@ -19,8 +19,8 @@ namespace GameOfLife
             {
                 for (int j = 0; j < inp; j++)
                 {
-                    if (cellBlock[i, j].Equals(1)) sum1++;
-                    line.Append(cellBlock[i, j]+ " ");
+                    if (cellBlock[i, j]) sum1++;
+                    line.Append(Convert.ToInt32(cellBlock[i, j])+ " ");
                 }
                 line.Append(" \n");
 
