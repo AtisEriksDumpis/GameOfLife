@@ -25,31 +25,27 @@ namespace GameOfLife
             Console.WriteLine(publicData.headerText);
             Console.WriteLine(publicData.matrixGeneratorOptions);
             string i = Console.ReadLine();
-
-            Thread[] paralelGames = new Thread[1];
-
-
-            draw.itercount = 0;
+            int gameCount = 2;
             if (i == "f")
             {
-                setup.cellBlock = setFrom.prepFromFile();
+                setup.cellBlock = setFrom.prepFromFile(gameCount);
             }
             else
             {
                 setFrom.inp = Convert.ToInt32(i);
-                setup.frameSetup(setFrom.inp);
+                setup.frameSetup(setFrom.inp, gameCount);
             }
-            for (int k = 0; k < paralelGames.Length; k++)
-            {
-                paralelGames[k] = new Thread(new ThreadStart(paralelThrProc.thredproceses));
-                paralelGames[k].Start();
-            }
-            draw.drawCur(setup.cellBlock, setFrom.inp);
+            draw.drawCur(setup.cellBlock, setFrom.inp, gameCount);
             do
             {
                 while (!Console.KeyAvailable)
                 {
-
+                    draw.itercount++;
+                    iteration.updater(setup.cellBlock, setFrom.inp, gameCount);
+                    setup.cellBlock = iteration.stepAray;
+                    draw.drawCur(setup.cellBlock, setFrom.inp, gameCount);
+                    Console.WriteLine(publicData.escapeText);
+                    Thread.Sleep(10000);
                 }
             } while (Console.ReadKey(true).Key != ConsoleKey.Escape);
             threadstop = false;
@@ -57,7 +53,7 @@ namespace GameOfLife
             string sinp = Console.ReadLine();
             if (sinp == "s")
             {
-                prFile.print(setup.cellBlock, setFrom.inp);
+                prFile.print(setup.cellBlock, setFrom.inp, gameCount);
             }
         }
     }

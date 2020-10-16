@@ -10,19 +10,21 @@ namespace GameOfLife
     class Iteration
     {
         //public aray for compareson reasons
-        public bool[,] stepAray;
+        public bool[,,] stepAray;
 
-        public void updater(bool[,] arr, int inp)
+        public void updater(bool[,,] arr, int inp, int games)
         {
             NeighbourCheckers neighbourCheck = new NeighbourCheckers();
-            stepAray = new bool[inp, inp];
-            for (int row = 0; row < inp; row++)
-            {
-                for (int column = 0; column < inp; column++)
+            stepAray = new bool[inp, inp,games];
+            for (int game=0;game<games;game++) {
+                for (int row = 0; row < inp; row++)
                 {
+                    for (int column = 0; column < inp; column++)
+                    {
 
-                    stepAray[row, column] = neighbourCheck.calculateIfCellWillSurvive(arr,inp,row,column);
+                        stepAray[row, column, game] = neighbourCheck.calculateIfCellWillSurvive(arr, inp, row, column, game);
 
+                    }
                 }
             }
         }

@@ -7,17 +7,20 @@ namespace GameOfLife
     //Class to set up the first game panel with random generation of cells
     class SetupRandom
     {
-        public bool[,] cellBlock;
+        public bool[,,] cellBlock;
 
-        public void frameSetup(int inp)
+        public void frameSetup(int input,int paralGameCount)
         {
             Random ran = new Random();
-            cellBlock = new bool[inp, inp];
-            for (int i = 0; i < inp; i++)
+            cellBlock = new bool[input, input, paralGameCount];
+            for (int game = 0; game < paralGameCount; game++)
             {
-                for (int j = 0; j < inp; j++)
+                for (int i = 0; i < input; i++)
                 {
-                    cellBlock[i, j] = (ran.Next(2)).Equals(1);
+                    for (int j = 0; j < input; j++)
+                    {
+                        cellBlock[i, j, game] = (ran.Next(2)).Equals(1);
+                    }
                 }
             }
         }
