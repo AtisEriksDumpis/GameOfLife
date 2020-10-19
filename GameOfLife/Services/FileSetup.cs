@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace GameOfLife
 {
-    class SetupFromFile
+    class FileSetup
     {
         public int inp;
         public bool[,,] fileCellBlock;

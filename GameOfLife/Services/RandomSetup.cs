@@ -5,7 +5,7 @@ using System.Text;
 namespace GameOfLife
 {
     //Class to set up the first game panel with random generation of cells
-    class SetupRandom
+    class RandomSetup
     {
         public bool[,,] cellBlock;
 

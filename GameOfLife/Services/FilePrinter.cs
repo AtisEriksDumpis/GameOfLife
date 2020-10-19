@@ -5,19 +5,19 @@ using System.Text;
 
 namespace GameOfLife
 {
-    class PrintToFile
+    class FilePrinter
     {
         public void print(bool[,,] cellBlock, int inp, int games) {
             string path = @"C:\Users\atis.dumpis\Documents\Temp\GameOfLife.txt";
-            Console.SetCursorPosition(0, 1);
-            Console.WriteLine("                                 ");
+            //Console.Clear();
+            //Console.WriteLine("                                 ");
             int sum1 = 0;
             string textline;
             var line = new StringBuilder();
             line.Append(inp +" \n");
             for (int game = 0; game < games; game++)
             {
-                line.Append("\n curent game: " + game + 1);
+                line.Append("\n");
                 for (int i = 0; i < inp; i++)
                 {
                     for (int j = 0; j < inp; j++)

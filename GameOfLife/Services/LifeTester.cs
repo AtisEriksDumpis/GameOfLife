@@ -4,8 +4,10 @@ using System.Text;
 
 namespace GameOfLife.Services
 {
-    class NeighbourCheckers
+    class LifeTester
     {
+        public int[] counOfLiveCells = {0,0};
+
         public bool calculateIfCellWillSurvive(bool[,,] arr, int input, int row, int column, int game)
         {
             int sum = 0;
@@ -31,13 +33,18 @@ namespace GameOfLife.Services
             {
                 if (sum == 2 || sum == 3)
                 {
+                    counOfLiveCells[0]++;
                     return true;
                 }
                 else return false;
             }
             else
             {
-                if (sum == 3) return true;
+                if (sum == 3)
+                {
+                    counOfLiveCells[0]++;
+                    return true;
+                }
                 else return false;
             }
         }
