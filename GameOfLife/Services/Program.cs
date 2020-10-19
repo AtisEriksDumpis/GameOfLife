@@ -7,7 +7,7 @@ namespace GameOfLife
         static void Main(string[] args)
         {
             MainProcess main = new MainProcess();
-            main.procOrd();
+            main.processOrder();
         }
     }
 }

@@ -15,7 +15,6 @@ namespace GameOfLife.Data
         public string escapeText = "Press P to pause Game of life";
         public string saveCurentstepText = "to save to file input s key and press Enter";
         public string selectParalelGames = "Please input the number of paralel games";
-        public List<int> stopList = new List<int>();
         public string pauseScreenMenue = "Game paused please select next action for game: \n 1) press [C] to change selected games \n 2) press [A] to same all games \n 3) press [S] to select and save game \n 4) press [ESC] to exit game";
         public string endProcesText = "Do you want to exit game then pres [N] otherwise pres any other key";
 

@@ -7,13 +7,12 @@ namespace GameOfLife
     //Main task list for orderly exacution. One process to call all other classes 
     class MainProcess
     {
-        public bool threadstop = true;
-        public void procOrd()
+        public void processOrder()
         {
-            FilePrinter printToFile = new FilePrinter();
+            FilePrinter filePrinter = new FilePrinter();
             PublicData publicData = new PublicData();
-            GameLooper actLoop = new GameLooper();
-            GameSelector slotSelect = new GameSelector();
+            GameLooper gameLooper = new GameLooper();
+            GameSelector gameSelector = new GameSelector();
 
             Console.WriteLine(publicData.headerText);
             Console.WriteLine(publicData.matrixGeneratorOptions);
@@ -30,27 +29,28 @@ namespace GameOfLife
             bool shouldStop = false;
             do
             {
-                printMas = actLoop.runGame(printMas, gameCount, i, isFirst);
+                printMas = gameLooper.runGame(printMas, gameCount, i, isFirst);
                 isFirst = false;
+                gameCount =  gameLooper.gameCount;
                 Console.WriteLine(publicData.pauseScreenMenue);
 
                 var input = Console.ReadKey();
                 switch (input.Key)
                 {
                     case ConsoleKey.A:
-                        int sameToThis =  slotSelect.selectGame(printMas, gameCount, Convert.ToInt32(i));
+                        int sameToThis = gameSelector.selectGame(printMas, gameCount, gameLooper.matrixSize);
                         for (int displaySlot = 0; displaySlot < 8; displaySlot++) 
                         {
-                            actLoop.displayedGameArr[displaySlot] = sameToThis;
+                            gameLooper.displayedGameArr[displaySlot] = sameToThis;
                         }
                         break;
                     case ConsoleKey.S:
-                        printToFile.print(printMas, Convert.ToInt32(i), gameCount);
+                        filePrinter.print(printMas, gameLooper.matrixSize, gameCount);
                         break;
                     case ConsoleKey.C:
                         Console.WriteLine("Input wich slot from 1 to 8 to change:");
                         int slotNum = Convert.ToInt32(Console.ReadLine());
-                        actLoop.displayedGameArr[slotNum-1]= slotSelect.selectGame(printMas, gameCount, Convert.ToInt32(i));
+                        gameLooper.displayedGameArr[slotNum-1]= gameSelector.selectGame(printMas, gameCount, gameLooper.matrixSize);
                         break;
                     case ConsoleKey.Escape:
                         shouldStop = true;

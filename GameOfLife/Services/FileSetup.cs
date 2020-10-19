@@ -9,43 +9,55 @@ namespace GameOfLife
 {
     class FileSetup
     {
-        public int inp;
+        public int matrixSize;
+        public int paralelGameCount;
         public bool[,,] fileCellBlock;
-        public bool[,,] prepFromFile(int v)
+        public bool[,,] prepFromFile()
         {
-            //Setup set = new Setup();
-
-            string path = @"C:\Users\atis.dumpis\Documents\Temp\GameOfLife.txt";
+            string path = AppDomain.CurrentDomain.BaseDirectory + "GameOfLife.txt";
             using (StreamReader sr = File.OpenText(path))
             {
                 string line = "";
-                inp = 0;
-                int counter = 0;
-                for (int k = 0; k < v; k++)
+                matrixSize = 0;
+                paralelGameCount = 0;
+                int row = 0;
+                int linecount = 0;
+                //paralelGameCount = 2;
+                //for (int k = 0; k < paralelGameCount*(matrixSize+1)+2; k++)
+                //{
+                while ((line = sr.ReadLine()) != null && (!row.Equals(matrixSize * paralelGameCount) || paralelGameCount.Equals(0)))
                 {
-                    while ((line = sr.ReadLine()) != null && !counter.Equals(5))
+                    if (matrixSize.Equals(0)) matrixSize = Convert.ToInt32(line);
+                    else if (paralelGameCount.Equals(0))
                     {
-                        if (inp.Equals(0))
-                        {
-                            inp = Convert.ToInt32(line);
-                            fileCellBlock = new bool[inp, inp, v];
-                        }
-                        else
-                        {
+                        paralelGameCount = Convert.ToInt32(line);
+                        fileCellBlock = new bool[matrixSize, matrixSize, paralelGameCount];
+                    }
+                    else
+                    {
+                        if (!line.Length.Equals(0)){
                             string[] digets = line.Split(' ');
-
-                            for (int j = 0; j < inp; j++)
+                            if (row == matrixSize)
                             {
-                                fileCellBlock[counter, j,k] = Convert.ToInt32(digets[j]).Equals(1);
+                                row = 0;
+                                linecount++;
                             }
-                            counter++;
+                            for (int column = 0; column < matrixSize; column++)
+                            {
+                                fileCellBlock[row, column, linecount] = Convert.ToInt32(digets[column]).Equals(1);
+                            }
+                            row++;
+                            //if (row % matrixSize == 0) linecount++;
                         }
-
-
                     }
                 }
+
+
             }
             return fileCellBlock;
+            // }
         }
+            
     }
 }
+

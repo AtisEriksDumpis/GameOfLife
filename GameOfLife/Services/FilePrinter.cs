@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace GameOfLife
 {
     class FilePrinter
     {
         public void print(bool[,,] cellBlock, int inp, int games) {
-            string path = @"C:\Users\atis.dumpis\Documents\Temp\GameOfLife.txt";
-            //Console.Clear();
-            //Console.WriteLine("                                 ");
-            int sum1 = 0;
+
+            string path = AppDomain.CurrentDomain.BaseDirectory + "GameOfLife.txt";
+
             string textline;
             var line = new StringBuilder();
-            line.Append(inp +" \n");
+            line.Append(inp +" \n"+games+"\n");
             for (int game = 0; game < games; game++)
             {
                 line.Append("\n");
@@ -22,20 +22,15 @@ namespace GameOfLife
                 {
                     for (int j = 0; j < inp; j++)
                     {
-                        if (cellBlock[i, j, game]) sum1++;
                         line.Append(Convert.ToInt32(cellBlock[i, j, game]) + " ");
                     }
                     line.Append(" \n");
-
                 }
             }
             textline = line.ToString();
-            if (File.Exists(path))
+            using (StreamWriter sw = File.CreateText(path))
             {
-                using (StreamWriter sw = File.CreateText(path))
-                {
-                    sw.WriteLine(textline);
-                }
+                sw.WriteLine(textline);
             }
         }
     }
